@@ -23,7 +23,19 @@ namespace pet_hotel.Controllers
         // occur when the route is missing in this controller
         [HttpGet]
         public IEnumerable<Pet> GetPets() {
-            return new List<Pet>();
+            // Include the `petOwner` property
+            // which is a list of `PetOwner` objects
+            // .NET will do a JOIN for us!
+            return _context.Pets.Include(pet => pet.petOwner);
+        }
+
+        [HttpPost]
+        public Pet Post(Pet pet) 
+        {
+            _context.Add(pet);
+            _context.SaveChanges();
+
+            return pet;
         }
 
         // [HttpGet]
