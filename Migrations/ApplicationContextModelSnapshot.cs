@@ -29,7 +29,7 @@ namespace dotnet_bakery.Migrations
                     b.Property<int>("breed")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("checkedInAt")
+                    b.Property<DateTime?>("checkedInAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("color")

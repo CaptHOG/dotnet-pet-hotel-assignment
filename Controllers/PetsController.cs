@@ -38,6 +38,49 @@ namespace pet_hotel.Controllers
             return pet;
         }
 
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            // Find the pet object by ID
+            Pet pet = _context.Pets.Find(id);
+            // Tell the database to remove the pet object
+            _context.Pets.Remove(pet);
+            // ...and save the changes to the database
+            _context.SaveChanges();
+        }
+
+        [HttpPut("{id}/checkin")]
+        public ActionResult<Pet> CheckinPet(int id)
+        {
+            Pet pet = _context.Pets.Find(id);
+            if (pet.checkedInAt == null)
+            {
+                pet.checkedInAt = DateTime.Now;
+                _context.SaveChanges();
+                return pet;
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("{id}/checkout")]
+        public ActionResult<Pet> CheckoutPet(int id)
+        {
+            Pet pet = _context.Pets.Find(id);
+            if (pet.checkedInAt == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                pet.checkedInAt = null;
+                _context.SaveChanges();
+                return pet;
+            }
+        }
+
         // [HttpGet]
         // [Route("test")]
         // public IEnumerable<Pet> GetPets() {
